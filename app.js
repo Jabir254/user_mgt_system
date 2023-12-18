@@ -18,11 +18,16 @@ app.set("view engine", "ejs");
 
 //home
 
-app.get("/", (req, res) => {
-  const locals = {
-    title: "Nodejs",
-  };
-  res.render("index", locals);
+// app.get("/", (req, res) => {
+//   const locals = {
+//     title: "Nodejs",
+//   };
+//   res.render("index", locals);
+// });
+
+//404 error page
+app.get("*", (req, res) => {
+  res.status(404).render("404");
 });
 
 app.listen(port, () => {
