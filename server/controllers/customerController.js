@@ -19,5 +19,5 @@ exports.addCustomer = async (req, res) => {
   const locals = {
     title: "Add new Customer",
   };
-  res.render("index", locals);
+  res.render("customer/add", locals);
 };
