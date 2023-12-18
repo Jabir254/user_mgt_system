@@ -16,14 +16,8 @@ app.use(expressLayouts);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
-//home
-
-// app.get("/", (req, res) => {
-//   const locals = {
-//     title: "Nodejs",
-//   };
-//   res.render("index", locals);
-// });
+//Routes
+app.use("/", require("./server/routes/customer"));
 
 //404 error page
 app.get("*", (req, res) => {
