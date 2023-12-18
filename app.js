@@ -20,7 +20,7 @@ app.set("view engine", "ejs");
 //home
 
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.render('index')
 });
 
 app.listen(port, () => {
