@@ -5,10 +5,11 @@ const mongoose = require("mongoose");
  * Homepage
  */
 exports.homepage = async (req, res) => {
+  const messages = await req.flash("info");
   const locals = {
     title: "NodeJs",
   };
-  res.render("index", locals);
+  res.render("index", { locals, messages });
 };
 
 /**
@@ -39,6 +40,7 @@ exports.postCustomer = async (req, res) => {
 
   try {
     await Customer.create(newCustomer);
+    await req.flash("info", "New Customer has been added");
 
     res.redirect("/");
   } catch (error) {
