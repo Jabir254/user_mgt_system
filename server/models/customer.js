@@ -1,4 +1,4 @@
-const mongoose = request("mongoose");
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 const CustomerSchema = new Schema({
@@ -10,16 +10,25 @@ const CustomerSchema = new Schema({
     type: String,
     required: true,
   },
-  telephone: {
+  tel: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  details: {
     type: String,
     required: true,
   },
   createdAt: {
-    type: date,
-    required: true,
+    type: Date,
+    default: Date.now(),
   },
   updatedAt: {
-    type: Data,
+    type: Date,
+    default: Date.now(),
   },
 });
 

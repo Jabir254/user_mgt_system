@@ -1,3 +1,5 @@
+const Customer = require("../models/customer");
+const mongoose = require("mongoose");
 /**
  * Get /
  * Homepage
@@ -8,8 +10,6 @@ exports.homepage = async (req, res) => {
   };
   res.render("index", locals);
 };
-
-
 
 /**
  * Get
@@ -28,9 +28,21 @@ exports.addCustomer = async (req, res) => {
  */
 exports.postCustomer = async (req, res) => {
   console.log(req.body);
-  
-  const locals = {
-    title: "New Customer added",
-  };
-  res.render("customer/add", locals);
+
+  const newCustomer = new Customer({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    details: req.body.details,
+    tel: req.body.tel,
+    email: req.body.email,
+  });
+
+  try {
+    await Customer.create(newCustomer);
+    await req.flash("info", "New customer has been added.");
+
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
 };
