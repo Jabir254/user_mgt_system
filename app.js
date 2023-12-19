@@ -1,36 +1,56 @@
 require("dotenv").config();
+
 const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
+const expressLayout = require("express-ejs-layouts");
+const methodOverride = require("method-override");
+
+// npm install connect-flash
+const flash = require("connect-flash");
+
+const session = require("express-session");
 const connectDB = require("./server/config/db");
-const cors = require("cors");
-const { flash } = require("express-flash-message");
 
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 
-//connect to database
+// Connect to Database
 connectDB();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(methodOverride("_method"));
 
-//static folder
+// Static Files
 app.use(express.static("public"));
 
-//template engine
-app.use(expressLayouts);
+// Express Session
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+  })
+);
+
+// Flash Messages
+app.use(flash({ sessionKeyName: "flashMessage" }));
+
+// Templating Engine
+app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
-//Routes
+// Routes
 app.use("/", require("./server/routes/customer"));
 
-//404 error page
+// Handle 404
 app.get("*", (req, res) => {
   res.status(404).render("404");
 });
 
 app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
+  console.log(`App listeing on port ${port}`);
 });
