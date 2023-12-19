@@ -21,3 +21,16 @@ exports.addCustomer = async (req, res) => {
   };
   res.render("customer/add", locals);
 };
+
+/**
+ * Post
+ * New customer Form
+ */
+exports.postCustomer = async (req, res) => {
+  console.log(req.body);
+  
+  const locals = {
+    title: "New Customer added",
+  };
+  res.render("customer/add", locals);
+};
