@@ -108,3 +108,24 @@ exports.edit = async (req, res) => {
     console.log(error);
   }
 };
+
+/**
+ * Put
+ * edit a customer data
+ */
+exports.postEdit = async (req, res) => {
+  try {
+    const customer = await Customer.findOne({ _id: req.params.id });
+
+    const locals = {
+      title: "edit customer data",
+      description: "user management system",
+    };
+    res.render("customer/edit", {
+      locals,
+      customer,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
