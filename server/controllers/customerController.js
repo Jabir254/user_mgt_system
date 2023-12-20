@@ -130,3 +130,16 @@ exports.postEdit = async (req, res) => {
     console.log(error);
   }
 };
+
+/**
+ * Delete
+ * delete a customer from the list
+ */
+exports.deleteCustomer = async (req, res) => {
+  try {
+    await Customer.deleteOne({ _id: req.params.id });
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
