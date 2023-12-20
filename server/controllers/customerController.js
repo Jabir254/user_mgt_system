@@ -152,7 +152,7 @@ exports.deleteCustomer = async (req, res) => {
 exports.searchCustomer = async (req, res) => {
   const locals = {
     title: "Search Customer Data",
-    description: "Free NodeJs User Management System",
+    description: "User Management System",
   };
 
   try {
