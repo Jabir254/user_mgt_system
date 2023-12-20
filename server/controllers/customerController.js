@@ -88,3 +88,23 @@ exports.view = async (req, res) => {
     console.log(error);
   }
 };
+
+/**
+ * Get
+ * edit customer data
+ */
+exports.view = async (req, res) => {
+  try {
+    const customer = await Customer.findOne({ _id: req.params.id });
+    const locals = {
+      title: "Edit Customer details",
+      description: "User Managament system",
+    };
+    res.render("customer/edit", {
+      locals,
+      customer,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
