@@ -93,7 +93,7 @@ exports.view = async (req, res) => {
  * Get
  * edit customer data
  */
-exports.view = async (req, res) => {
+exports.edit = async (req, res) => {
   try {
     const customer = await Customer.findOne({ _id: req.params.id });
     const locals = {
