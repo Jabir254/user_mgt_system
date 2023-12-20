@@ -8,11 +8,24 @@ exports.homepage = async (req, res) => {
   const messages = await req.flash("info");
   const locals = {
     title: "NodeJs",
+    description: " User Management System",
   };
+  let perPage = 12;
+  let page = req.query.page || 1;
 
   try {
-    const customers = await Customer.find({}).limit(22);
-    res.render("index", { locals, messages, customers });
+    const customers = await Customer.aggregate([{ $sort: { updatedAt: -1 } }])
+      .skip(perPage * page - perPage)
+      .limit(perPage)
+      .exec();
+    const count = await Customer.countDocuments();
+    res.render("index", {
+      locals,
+      customers,
+      current: page,
+      pages: Math.ceil(count / perPage),
+      messages,
+    });
   } catch (error) {
     console.log(error);
   }
