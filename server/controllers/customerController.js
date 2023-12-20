@@ -115,16 +115,17 @@ exports.edit = async (req, res) => {
  */
 exports.postEdit = async (req, res) => {
   try {
-    const customer = await Customer.findOne({ _id: req.params.id });
-
-    const locals = {
-      title: "edit customer data",
-      description: "user management system",
-    };
-    res.render("customer/edit", {
-      locals,
-      customer,
+    await Customer.findByIdAndUpdate(req.params.id, {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      tel: req.body.tel,
+      email: req.body.email,
+      details: req.body.details,
+      updatedAt: Date.now(),
     });
+    await res.redirect(`/edit/${req.params.id}`);
+
+    console.log("redirected");
   } catch (error) {
     console.log(error);
   }
