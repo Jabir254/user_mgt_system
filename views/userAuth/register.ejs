@@ -23,11 +23,12 @@
       const username = document.querySelector("#username");
       const password = document.querySelector("#password");
       const display = document.querySelector(".error");
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         display.textContent = "";
         try {
-          const res = await fetch("/auth/register", {
+          const res = await fetch("/api/auth/register", {
             method: "POST",
             body: JSON.stringify({
               username: username.value,

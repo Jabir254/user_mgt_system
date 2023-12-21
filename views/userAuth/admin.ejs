@@ -6,13 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin page</title>
   </head>
+
   <body>
     <div class="display" style="background-color: red"></div>
     <h1>Users</h1>
     <ul></ul>
+    <button class="logout"><a href="/logout">Log Out</a></button>
     <script>
       const ul = document.querySelector("ul");
       const display = document.querySelector(".display");
+
       const getUsers = async () => {
         const res = await fetch("/api/auth/getUsers");
         const data = await res.json();
@@ -24,56 +27,51 @@
             return null;
           }
           const editRole = document.querySelectorAll(".edit");
-          const deleteUser = document.querySelector(".delete");
+          const deleteUser = document.querySelectorAll(".delete");
+
+          editRole.forEach((button, i) => {
+            button.addEventListener("click", async () => {
+              display.textContent = "";
+              const id = data.user[i + 1].id;
+              const res = await fetch("/api/auth/update", {
+                method: "PUT",
+                body: JSON.stringify({ role: "admin", id }),
+                headers: { "Content-Type": "application/json" },
+              });
+              const dataUpdate = await res.json();
+              if (res.status === 400 || res.status === 401) {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                return (display.textContent = `${dataUpdate.message}. ${
+                  dataUpdate.error ? dataUpdate.error : ""
+                }`);
+              }
+              location.assign("/admin");
+            });
+          });
+          deleteUser.forEach((button, i) => {
+            button.addEventListener("click", async () => {
+              display.textContent = "";
+              const id = data.user[i + 1].id;
+              const res = await fetch("/api/auth/deleteUser", {
+                method: "DELETE",
+                body: JSON.stringify({ id }),
+                headers: { "Content-Type": "application/json" },
+              });
+              const dataDelete = await res.json();
+              if (res.status === 401) {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                return (display.textContent = `${dataUpdate.message}. ${
+                  dataUpdate.error ? dataUpdate.error : ""
+                }`);
+              }
+              location.assign("/admin");
+            });
+          });
         });
       };
       getUsers();
-
-      const editRole = document.querySelectorAll(".edit");
-      const deleteUser = document.querySelector(".delete");
-      editRole.forEach((button, i) => {
-        button.addEventListener("click", async () => {
-          display.textContent = "";
-          const id = data.user[i + 1].id;
-          const res = await fetch("/auth/update", {
-            method: "PUT",
-            body: JSON.stringify({ role: "admin", id }),
-            headers: { "Content-Type": "application/json" },
-          });
-          const dataUpdate = await res.json();
-          if (res.status === 400 || res.status === 401) {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-            return (display.textContent = `${dataUpdate.message}. ${
-              dataUpdate.error ? dataUpdate.error : ""
-            }`);
-          }
-          location.assign("/admin");
-        });
-      });
-
-      const editRole = document.querySelectorAll(".edit");
-      const deleteUser = document.querySelector(".delete");
-      deleteUser.forEach((button, i) => {
-        button.addEventListener("click", async () => {
-          display.textContent = "";
-          const id = data.user[i + 1].id;
-          const res = await fetch("/auth/deleteUser", {
-            method: "DELETE",
-            body: JSON.stringify({ id }),
-            headers: { "Content-Type": "application/json" },
-          });
-          const dataDelete = await res.json();
-          if (res.status === 401) {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-            return (display.textContent = `${dataUpdate.message}. ${
-              dataUpdate.error ? dataUpdate.error : ""
-            }`);
-          }
-          location.assign("/admin");
-        });
-      });
     </script>
   </body>
 </html>
