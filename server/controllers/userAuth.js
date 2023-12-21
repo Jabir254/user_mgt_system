@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 exports.userSign = async (req, res) => {
   const username = req.body;
@@ -9,7 +10,7 @@ exports.userSign = async (req, res) => {
     await User.create({
       username,
       email,
-      password,
+      password: bcrypt.hash(password, 10),
     });
     res.render("login");
   } catch (error) {
@@ -27,16 +28,21 @@ exports.Login = async (req, res) => {
     });
   }
   try {
-    const user = await User.findOne({ username, password });
+    const user = await User.findOne({ username });
     if (!user) {
-      res.status(401).json({
+      res.status(400).json({
         message: "Login not successful",
         error: "User not found",
       });
     } else {
-      res.status(200).json({
-        message: "Login successful",
-        user,
+      // comparing given password with hashed password
+      bcrypt.compare(password, user.password).then(function (result) {
+        result
+          ? res.status(200).json({
+              message: "Login successful",
+              user,
+            })
+          : res.status(400).json({ message: "Login not succesful" });
       });
     }
   } catch (error) {
