@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 const methodOverride = require("method-override");
+const { adminAuth, userAuth } = require("./server/middleware/auth");
 
 // npm install connect-flash
 const flash = require("connect-flash");
@@ -46,6 +47,7 @@ app.use(express.json());
 // Routes
 app.use("/", require("./server/routes/customer"));
 app.use("/auth", require("./server/routes/userRoute"));
+app.get('/admin', adminAuth, (res, req) => res.sessionID('Admin Route'));
 
 // Handle 404
 app.get("*", (req, res) => {
