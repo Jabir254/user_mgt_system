@@ -35,7 +35,7 @@
         button.addEventListener("click", async () => {
           display.textContent = "";
           const id = data.user[i + 1].id;
-          const res = await fetch("/api/auth/update", {
+          const res = await fetch("/auth/update", {
             method: "PUT",
             body: JSON.stringify({ role: "admin", id }),
             headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@
         button.addEventListener("click", async () => {
           display.textContent = "";
           const id = data.user[i + 1].id;
-          const res = await fetch("/api/auth/deleteUser", {
+          const res = await fetch("/auth/deleteUser", {
             method: "DELETE",
             body: JSON.stringify({ id }),
             headers: { "Content-Type": "application/json" },
