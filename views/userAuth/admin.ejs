@@ -53,7 +53,7 @@
             button.addEventListener("click", async () => {
               display.textContent = "";
               const id = data.user[i + 1].id;
-              const res = await fetch("/api/auth/deleteUser", {
+              const res = await fetch("/auth/deleteUser", {
                 method: "DELETE",
                 body: JSON.stringify({ id }),
                 headers: { "Content-Type": "application/json" },
