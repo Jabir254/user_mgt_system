@@ -17,7 +17,6 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(methodOverride("_method"));
 
 // Static Files
@@ -43,6 +42,7 @@ app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
+app.use(express.json());
 // Routes
 app.use("/", require("./server/routes/customer"));
 app.use("/auth", require("./server/routes/userRoute"));
