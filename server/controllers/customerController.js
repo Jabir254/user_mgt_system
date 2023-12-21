@@ -32,6 +32,24 @@ exports.homepage = async (req, res) => {
 };
 
 /**
+ *
+ * @param {GEt} req
+ * @param {*about} res
+ */
+exports.about = async (req, res) => {
+  const locals = {
+    title: "About",
+    description: "User Management System",
+  };
+
+  try {
+    res.render("about", locals);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/**
  * Get
  * New Customer
  */
