@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@admin-bro/express": "^3.1.0",
+    "@admin-bro/mongoose": "^1.1.0",
     "admin-bro": "^4.0.1",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",

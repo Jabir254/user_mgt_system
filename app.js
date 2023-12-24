@@ -9,6 +9,7 @@ const flash = require("connect-flash");
 
 const session = require("express-session");
 const connectDB = require("./server/config/db");
+const { adminBro, router } = require("./server/controllers/adminController");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -43,6 +44,8 @@ app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
 app.use(express.json());
+//admin route
+app.use(adminBro.options.rootPath, router);
 // Routes
 app.use("/", require("./server/routes/customer"));
 
