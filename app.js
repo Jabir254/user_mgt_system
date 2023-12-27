@@ -46,7 +46,7 @@ app.use(express.json());
 
 // Routes
 app.use("/", require("./server/routes/customer"));
-app.use("/admin", require("./server/controllers/adminController"));
+app.use("/admin", require("./server/routes/adminRoute"));
 
 // Handle 404
 app.get("*", (req, res) => {
