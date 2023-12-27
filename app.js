@@ -4,7 +4,6 @@ const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 const methodOverride = require("method-override");
 
-
 // npm install connect-flash
 const flash = require("connect-flash");
 
@@ -47,6 +46,7 @@ app.use(express.json());
 
 // Routes
 app.use("/", require("./server/routes/customer"));
+app.use("/admin", require("./server/controllers/adminController"));
 
 // Handle 404
 app.get("*", (req, res) => {
