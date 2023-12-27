@@ -1,10 +1,11 @@
-const Admin = require('../models/Admin');
-const mongoose = require('mongoose');
+const Admin = require("../models/Admin");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 
 /**
  * create a new admin
- * @param {new Admin} req 
- * @param {body} res 
+ * @param {new Admin} req
+ * @param {body} res
  */
 exports.addAdmin = async (req, res) => {
   console.log(req.body);
@@ -13,7 +14,7 @@ exports.addAdmin = async (req, res) => {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
   });
 
   try {
@@ -23,5 +24,21 @@ exports.addAdmin = async (req, res) => {
     res.redirect("/");
   } catch (error) {
     console.log(error);
+  }
+};
+
+/**
+ * login in with the admin creditials
+ */
+
+exports.loginAdmin = async (req, res) => {
+  const { userName, password } = req.body;
+  if (userName == userName && password == password) {
+    const token = jwt.sign({ username }, "your-secret-key", {
+      expiresIn: "1h",
+    });
+    res.json({ token });
+  } else {
+    res.status(401).json({ error: "Invalid username or password" });
   }
 };

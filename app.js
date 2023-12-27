@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
 
 // npm install connect-flash
 const flash = require("connect-flash");
@@ -44,6 +45,8 @@ app.set("view engine", "ejs");
 
 app.use(express.json());
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 // Routes
 app.use("/", require("./server/routes/customer"));
 app.use("/admin", require("./server/routes/adminRoute"));
