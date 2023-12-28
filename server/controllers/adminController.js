@@ -34,7 +34,7 @@ exports.addAdmin = async (req, res) => {
 exports.loginAdmin = async (req, res) => {
   const { userName, password } = req.body;
   if (userName == userName && password == password) {
-    const token = jwt.sign({ username }, "your-secret-key", {
+    const token = jwt.sign({ userName }, "your-secret-key", {
       expiresIn: "1h",
     });
     res.redirect('/dashboard');
