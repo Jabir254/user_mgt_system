@@ -37,7 +37,7 @@ exports.loginAdmin = async (req, res) => {
     const token = jwt.sign({ username }, "your-secret-key", {
       expiresIn: "1h",
     });
-    res.json({ token });
+    res.redirect('/dashboard');
   } else {
     res.status(401).json({ error: "Invalid username or password" });
   }
