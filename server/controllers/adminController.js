@@ -21,7 +21,7 @@ exports.addAdmin = async (req, res) => {
     await Admin.create(newAdmin);
     await req.flash("info", "New admin has been added");
 
-    res.redirect("/");
+    res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
   }
@@ -32,12 +32,12 @@ exports.addAdmin = async (req, res) => {
  */
 
 exports.loginAdmin = async (req, res) => {
-  const { userName, password } = req.body;
-  if (userName == userName && password == password) {
-    const token = jwt.sign({ userName }, "your-secret-key", {
+  const { email, password } = req.body;
+  if (email == email && password == password) {
+    const token = jwt.sign({ password }, "your-secret-key", {
       expiresIn: "1h",
     });
-    res.redirect('/dashboard');
+    res.render('admin/login');
   } else {
     res.status(401).json({ error: "Invalid username or password" });
   }
