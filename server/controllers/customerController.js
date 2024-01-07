@@ -1,5 +1,17 @@
 const Customer = require("../models/customer");
 const mongoose = require("mongoose");
+
+
+/**
+ * 
+ */
+exports.landingPage = async (req, res) => {
+  const locals = {
+    title: "user management system",
+    description: "landing page"
+  };
+  res.render('landing', locals)
+}
 /**
  * Get /
  * Homepage
