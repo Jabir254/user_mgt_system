@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
  * @desc Registers a user
  * @access Public
  */
-export async function Register(req, res) {
+exports.Register = async function (req, res) {
   // get required variables from request body
   // using es6 object destructing
   const { firstName, lastName, email, password } = req.body;
@@ -44,4 +44,4 @@ export async function Register(req, res) {
     });
   }
   res.end();
-}
+};
