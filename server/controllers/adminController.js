@@ -2,25 +2,23 @@ const Admin = require("../models/Admin");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
-/**
- * @route POST v1/auth/register
- * @desc Registers a user
- * @access Public
- */
 exports.Register = async function (req, res) {
   // get required variables from request body
   // using es6 object destructing
-  const { firstName, lastName, email, password } = req.body;
+  const firstName = req.body;
+  const lastName = req.body;
+  const email = req.body;
+  const password = req.body;
   try {
     // create an instance of a user
-    const newUser = new User({
+    const newUser = new Admin({
       firstName,
       lastName,
       email,
       password,
     });
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await Admin.findOne({ email });
     if (existingUser)
       return res.status(400).json({
         status: "failed",
@@ -41,7 +39,8 @@ exports.Register = async function (req, res) {
       code: 500,
       data: [],
       message: "Internal Server Error",
-    });
+      });
+    console.log(err);
   }
   res.end();
 };
