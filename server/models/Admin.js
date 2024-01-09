@@ -19,6 +19,8 @@ const adminSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      select:false,
+      max: 25
     },
     role: {
       type: String,

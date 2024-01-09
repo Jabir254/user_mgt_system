@@ -28,4 +28,15 @@ router.post(
   Validate,
   adminController.Register
 );
+
+router.post(
+  "/login",
+  check("email")
+    .isEmail()
+    .withMessage("Enter a valid email Address")
+    .normalizeEmail(),
+  check("password").not().isEmpty(),
+  Validate,
+  adminController.Login
+);
 module.exports = router;

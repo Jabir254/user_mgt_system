@@ -51,7 +51,7 @@ exports.Login = async function (req, res) {
   const { email } = req.body;
   try {
     // Check if user exists
-    const user = await User.findOne({ email }).select("+password");
+    const user = await Admin.findOne({ email }).select("+password");
     if (!user)
       return res.status(401).json({
         status: "failed",
@@ -88,6 +88,7 @@ exports.Login = async function (req, res) {
       data: [],
       message: "Internal Server Error",
     });
+    console.log(err);
   }
   res.end();
 };
