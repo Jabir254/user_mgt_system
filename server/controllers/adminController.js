@@ -5,10 +5,10 @@ const jwt = require("jsonwebtoken");
 exports.Register = async function (req, res) {
   // get required variables from request body
   // using es6 object destructing
-  const firstName = req.body;
-  const lastName = req.body;
-  const email = req.body;
-  const password = req.body;
+  const { firstName } = req.body;
+  const { lastName } = req.body;
+  const { email } = req.body;
+  const { password } = req.body;
   try {
     // create an instance of a user
     const newUser = new Admin({
@@ -39,7 +39,7 @@ exports.Register = async function (req, res) {
       code: 500,
       data: [],
       message: "Internal Server Error",
-      });
+    });
     console.log(err);
   }
   res.end();
