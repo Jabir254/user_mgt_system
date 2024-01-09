@@ -42,3 +42,13 @@ exports.loginAdmin = async (req, res) => {
     res.status(401).json({ error: "Invalid username or password" });
   }
 };
+/**
+ * render dashboard
+ */
+exports.postDashboard = async (req, res) => {
+  const locals = {
+    title: "user management system",
+    description: "landing page",
+  };
+  res.render("admin/dashboard");
+};
