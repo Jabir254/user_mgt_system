@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jsonwebtoken = require("jsonwebtoken");
+const dotenv = require("dotenv").config()
+
+dotenv.config();
+
+const { jwtSecret } = process.env;
+
+
 
 const adminSchema = new mongoose.Schema(
   {
