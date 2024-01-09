@@ -37,7 +37,7 @@ exports.loginAdmin = async (req, res) => {
     const token = jwt.sign({ password }, "your-secret-key", {
       expiresIn: "1h",
     });
-    res.render('admin/login');
+    res.render('admin/signin');
   } else {
     res.status(401).json({ error: "Invalid username or password" });
   }
