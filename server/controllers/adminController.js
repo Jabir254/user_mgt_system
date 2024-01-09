@@ -56,12 +56,11 @@ exports.Login = async function (req, res) {
       return res.status(401).json({
         status: "failed",
         data: [],
-        message:
-          "Invalid email or password. Please try again with the correct credentials.",
+        message: "Account does not exist",
       });
     // if user exists
     // validate password
-    const isPasswordValid = await bcrypt.compare(
+    const isPasswordValid = bcrypt.compare(
       `${req.body.password}`,
       user.password
     );
@@ -73,12 +72,18 @@ exports.Login = async function (req, res) {
         message:
           "Invalid email or password. Please try again with the correct credentials.",
       });
-    // return user info except password
-    const { password, ...user_data } = user._doc;
 
+    let options = {
+      maxAge: 20 * 60 * 1000, // would expire in 20minutes
+      httpOnly: true, // The cookie is only accessible by the web server
+      secure: true,
+      sameSite: "None",
+    };
+    const token = user.generateAccessJWT(); // generate session token for user
+    res.cookie("SessionID", token, options); // set the token to response header, so that the client sends it back on each subsequent request
     res.status(200).json({
       status: "success",
-      data: [user_data],
+      data: [],
       message: "You have successfully logged in.",
     });
   } catch (err) {

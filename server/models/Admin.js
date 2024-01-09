@@ -1,11 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
-const dotenv = require("dotenv").config();
-
-dotenv.config();
-
-const { jwtSecret } = process.env;
+require("dotenv").config();
 
 const adminSchema = new mongoose.Schema(
   {
@@ -55,7 +51,7 @@ adminSchema.methods.generateAccessJWT = function () {
   let payload = {
     id: this._id,
   };
-  return jwt.sign(payload, jwtSecret, {
+  return jsonwebtoken.sign(payload, `${process.env.jwtSecret}`, {
     expiresIn: "20m",
   });
 };
