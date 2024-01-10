@@ -38,7 +38,7 @@ router.post(
  * route to login an admin
  */
 router.post(
-  "/login",
+  "/signin",
   check("email")
     .isEmail()
     .withMessage("Enter a valid email Address")

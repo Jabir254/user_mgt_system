@@ -82,12 +82,12 @@ exports.Login = async function (req, res) {
     };
     const token = user.generateAccessJWT(); // generate session token for user
     res.cookie("SessionID", token, options); // set the token to response header, so that the client sends it back on each subsequent request
-    //res.render("admin/signin");
-    res.status(200).json({
-      status: "success",
-      data: [],
-      message: "You have successfully logged in.",
-    });
+    res.render("signin");
+    // res.status(200).json({
+    //   status: "success",
+    //   data: [],
+    //   message: "You have successfully logged in.",
+    // });
   } catch (err) {
     res.status(500).json({
       status: "error",
