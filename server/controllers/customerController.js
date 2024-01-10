@@ -22,7 +22,7 @@ exports.homepage = async (req, res) => {
     title: "NodeJs",
     description: " User Management System",
   };
-  let perPage = 12;
+  let perPage = 10;
   let page = req.query.page || 1;
 
   try {
