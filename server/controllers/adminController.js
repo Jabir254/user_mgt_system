@@ -119,7 +119,11 @@ exports.Logout = async function (req, res) {
     res.setHeader("Clear-Site-Data", '"cookies"');
     res.status(200).json({ message: "Successfully logged out" });
   } catch (err) {
-    res.status(500).json({ status: "error", message: err.message });
+    res.status(500).json({
+      status: "error",
+      message: err.message,
+    });
+    console.log(err);
   }
   res.end();
 };
