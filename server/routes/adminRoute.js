@@ -3,6 +3,10 @@ const router = express.Router();
 const Validate = require("../middleware/validate");
 const adminController = require("../controllers/adminController");
 const check = require("express-validator").check;
+
+/**
+ * route to register an admin
+ */
 router.post(
   "/register",
   check("email")
@@ -29,6 +33,10 @@ router.post(
   adminController.Register
 );
 
+
+/**
+ * route to login an admin
+ */
 router.post(
   "/login",
   check("email")
@@ -39,4 +47,10 @@ router.post(
   Validate,
   adminController.Login
 );
+
+/**
+ * loggin out
+ */
+router.get("/logout", adminController.Logout);
+
 module.exports = router;
