@@ -2,6 +2,7 @@ const Admin = require("../models/Admin");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Blacklist = require("../models/Blacklist");
 
 exports.Register = async function (req, res) {
   // get required variables from request body
@@ -94,6 +95,31 @@ exports.Login = async function (req, res) {
       message: "Internal Server Error",
     });
     console.log(err);
+  }
+  res.end();
+};
+
+/**
+ * Logout
+ */
+
+exports.Logout = async function (req, res) {
+  try {
+    const authHeader = req.headers["cookie"];
+    if (!authHeader) return res.sendStatus(204);
+    const cookie = authHeader.split("=")[1];
+    const accessToken = cookie.split(";")[0];
+    const checkIfBlacklisted = await Blacklist.findOne({ token: accessToken });
+    if (checkIfBlacklisted) return res.sendStatus(204);
+    const newBlacklist = new Blacklist({
+      token: accessToken,
+    });
+    await newBlacklist.save();
+
+    res.setHeader("Clear-Site-Data", '"cookies"');
+    res.status(200).json({ message: "Successfully logged out" });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
   }
   res.end();
 };
