@@ -8,6 +8,13 @@ exports.Verify = async function (req, res, next) {
     const authHeader = req.headers["cookie"];
     if (!authHeader) return res.sendStatus(401);
     const cookie = authHeader.split("=")[1];
+    const accessToken = cookie.split(";")[0];
+    const checkIfBlacklisted = await Blacklist.findOne({ token: accessToken }); // Check if that token is blacklisted
+    // if true, send an unathorized message, asking for a re-authentication.
+    if (checkIfBlacklisted)
+      return res
+        .status(401)
+        .json({ message: "This session has expired. Please login" });
 
     jwt.verify(cookie, `${process.env.jwtSecret}`, async (err, decoded) => {
       if (err) {
